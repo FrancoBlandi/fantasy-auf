@@ -488,8 +488,7 @@ function makeJersey(color, uid, kit = {}) {
     <linearGradient id="jg${uid}" x1="0" y1="0" x2=".7" y2="1">
       <stop offset="0%" stop-color="${color}" stop-opacity=".95"/>
       <stop offset="100%" stop-color="${color}" stop-opacity=".68"/>
-    </linearGradient>
-    <clipPath id="jc${uid}"><path d="${JP}"/></clipPath>`;
+    </linearGradient>`;
 
   let body;
   if (style === "stripes_v") {
@@ -497,14 +496,14 @@ function makeJersey(color, uid, kit = {}) {
       <rect x="0" y="0" width="${sw}" height="68" fill="${color}"/>
       <rect x="${sw}" y="0" width="${sw}" height="68" fill="${secondary}"/>
     </pattern>`;
-    body = `<rect x="0" y="0" width="60" height="68" fill="url(#jp${uid})" clip-path="url(#jc${uid})"/>
+    body = `<path d="${JP}" fill="url(#jp${uid})"/>
     <path d="${JP}" fill="url(#jg${uid})" opacity=".18"/>`;
   } else if (style === "hoops") {
     defs += `<pattern id="jp${uid}" x="0" y="0" width="60" height="${hw * 2}" patternUnits="userSpaceOnUse">
       <rect x="0" y="0" width="60" height="${hw}" fill="${color}"/>
       <rect x="0" y="${hw}" width="60" height="${hw}" fill="${secondary}"/>
     </pattern>`;
-    body = `<rect x="0" y="0" width="60" height="68" fill="url(#jp${uid})" clip-path="url(#jc${uid})"/>
+    body = `<path d="${JP}" fill="url(#jp${uid})"/>
     <path d="${JP}" fill="url(#jg${uid})" opacity=".18"/>`;
   } else if (style === "sash") {
     body = `<path d="${JP}" fill="url(#jg${uid})"/>

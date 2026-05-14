@@ -97,15 +97,22 @@
                 <h2>Once titular</h2>
               </div>
               <div class="actions">
-                <button id="autoPick" class="primary">Autoarmar</button>
+                <button id="saveTeam" class="primary">Guardar equipo</button>
+                <button id="autoPick" class="ghost">Autoarmar</button>
                 <button id="clearTeam" class="ghost">Limpiar</button>
               </div>
             </div>
             <div class="pitch" id="pitch"></div>
             <div class="bench-panel">
               <div>
-                <p class="eyebrow">Banco</p>
-                <h2>Suplentes</h2>
+                <div>
+                  <p class="eyebrow">Banco</p>
+                  <h2>Suplentes</h2>
+                </div>
+                <div id="transferBadge" class="transfer-badge">
+                  <span id="transferUsed">0</span><span>/3</span>
+                  <small>transferencias</small>
+                </div>
               </div>
               <div id="bench" class="bench"></div>
             </div>
@@ -189,6 +196,18 @@
     <footer>
       Datos base de clubes y planteles consultados en SofaScore para Liga AUF Uruguaya 2026. Prototipo local sin backend.
     </footer>
+
+    <div id="confirmModal" class="modal" hidden>
+      <div class="modal-box">
+        <p class="eyebrow" id="confirmEyebrow">Confirmar selección</p>
+        <h3 id="confirmTitle"></h3>
+        <p id="confirmBody" class="meta"></p>
+        <div class="modal-actions">
+          <button id="confirmYes" class="primary">Confirmar</button>
+          <button id="confirmNo" class="ghost">Cancelar</button>
+        </div>
+      </div>
+    </div>
 
     <script src="./app.js"></script>
   </body>

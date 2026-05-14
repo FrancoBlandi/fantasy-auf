@@ -434,6 +434,46 @@ button.ghost:hover { color: var(--on-surface); border-color: var(--outline); }
 }
 .slot .remove:hover { background: var(--error-container); color: var(--on-error-container); }
 
+/* ── Transfer badge ── */
+.transfer-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 1px;
+}
+.transfer-badge > span { font-size: 18px; font-weight: 800; color: var(--primary); line-height: 1; letter-spacing: -.02em; }
+.transfer-badge > small { font-size: 9px; font-weight: 700; color: var(--on-surface-variant); text-transform: uppercase; letter-spacing: .05em; }
+.transfer-badge[data-over="1"] > span { color: var(--error); }
+
+/* ── Save button state ── */
+button.primary.saved { background: #16a34a; color: #fff; }
+
+/* ── Modal ── */
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  padding: 24px;
+}
+.modal[hidden] { display: none; }
+.modal-box {
+  background: var(--surface-container-lowest);
+  border: 1px solid var(--outline-variant);
+  border-radius: 12px;
+  padding: 24px;
+  max-width: 380px;
+  width: 100%;
+  box-shadow: 0 8px 32px rgba(0,0,0,.25);
+}
+.modal-box h3 { font-size: 20px; font-weight: 800; color: var(--on-surface); margin: 6px 0 8px; letter-spacing: -.02em; }
+.modal-box .meta { font-size: 12px; color: var(--on-surface-variant); line-height: 1.6; margin-bottom: 20px; }
+.modal-actions { display: flex; gap: 10px; }
+.modal-actions .primary { flex: 1; justify-content: center; }
+
 /* ── Bench ── */
 .bench-panel { border-top: 1px solid var(--outline-variant); padding-top: 14px; margin-top: 4px; }
 .bench-panel > div { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }

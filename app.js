@@ -227,6 +227,7 @@ const players = teams.flatMap((team) => {
   return [...unique.values()];
 });
 
+const transferLimit = 3;
 const storedSelected = JSON.parse(localStorage.getItem("aufSelected") || "[]");
 const storedBench = JSON.parse(localStorage.getItem("aufBench") || "{}");
 const storedStats = JSON.parse(localStorage.getItem("aufStats") || "{\"players\":{},\"captains\":{},\"coaches\":{}}");
@@ -245,7 +246,9 @@ const state = {
   vice: localStorage.getItem("aufVice") || "",
   coach: localStorage.getItem("aufCoach") || "",
   stats: storedStats,
-  activeSlot: null
+  activeSlot: null,
+  transfers: Number(localStorage.getItem("aufTransfers") || "0"),
+  savedOnce: !!localStorage.getItem("aufSaved")
 };
 
 const $ = (selector) => document.querySelector(selector);
@@ -283,6 +286,43 @@ function save() {
   localStorage.setItem("aufVice", state.vice);
   localStorage.setItem("aufCoach", state.coach);
   localStorage.setItem("aufStats", JSON.stringify(state.stats));
+  localStorage.setItem("aufTransfers", String(state.transfers));
+}
+
+function saveTeam() {
+  const isInitial = !state.savedOnce;
+  save();
+  state.savedOnce = true;
+  localStorage.setItem("aufSaved", "1");
+  const btn = $("#saveTeam");
+  if (!btn) return;
+  btn.textContent = isInitial ? "¡Equipo guardado!" : "¡Cambios guardados!";
+  btn.classList.add("saved");
+  setTimeout(() => {
+    btn.textContent = "Guardar equipo";
+    btn.classList.remove("saved");
+  }, 2000);
+}
+
+let pendingPickId = null;
+function showConfirm(playerId) {
+  const player = players.find((p) => p.id === playerId);
+  if (!player) return;
+  const replacing = activePlayer();
+  const isInitial = !state.savedOnce;
+  const transferCost = replacing && !isInitial ? 1 : 0;
+  pendingPickId = playerId;
+  const modal = $("#confirmModal");
+  $("#confirmEyebrow").textContent = replacing ? "Cambiar jugador" : "Agregar jugador";
+  $("#confirmTitle").textContent = player.name;
+  const details = [`${player.team} · ${player.position} · $${player.price}M · ${player.points} pts`];
+  if (replacing) details.push(`Reemplaza a: ${replacing.name}`);
+  if (transferCost) {
+    const left = transferLimit - state.transfers;
+    details.push(left > 0 ? `Usa 1 transferencia (${left - 1} restantes)` : `Sin transferencias libres — cuesta puntos extra`);
+  }
+  $("#confirmBody").textContent = details.join(" · ");
+  modal.hidden = false;
 }
 
 function recordStat(group, id) {
@@ -339,6 +379,7 @@ function pickForActiveSlot(id) {
   const player = players.find((item) => item.id === id);
   if (!player || !canPickForActiveSlot(player)) return;
   const replacing = activePlayer();
+  if (replacing && state.savedOnce) state.transfers = Math.min(state.transfers + 1, 99);
   if (replacing) {
     if (state.captain === replacing.id) state.captain = player.id;
     if (state.vice === replacing.id) state.vice = player.id;
@@ -524,6 +565,13 @@ function renderStats() {
   $("#teamCount").textContent = teams.length;
   $("#budgetLeft").textContent = `$${budgetLeft().toFixed(1)}M`;
   $("#roundPoints").textContent = `${projectedRoundPoints()} pts`;
+  const usedEl = $("#transferUsed");
+  if (usedEl) {
+    const used = state.savedOnce ? state.transfers : 0;
+    usedEl.textContent = used;
+    const badge = $("#transferBadge");
+    if (badge) badge.dataset.over = used > transferLimit ? "1" : "0";
+  }
 }
 
 function renderRanking() {
@@ -705,7 +753,7 @@ document.addEventListener("click", (event) => {
   }
 
   const pick = event.target.closest("[data-pick]");
-  if (pick) pickForActiveSlot(pick.dataset.pick);
+  if (pick) showConfirm(pick.dataset.pick);
 
   const remove = event.target.closest("[data-remove]");
   if (remove) {
@@ -757,7 +805,19 @@ $("#coachSelect").addEventListener("change", (event) => {
   save();
   render();
 });
+$("#saveTeam").addEventListener("click", saveTeam);
 $("#autoPick").addEventListener("click", autoPick);
+$("#confirmYes").addEventListener("click", () => {
+  $("#confirmModal").hidden = true;
+  if (pendingPickId) { pickForActiveSlot(pendingPickId); pendingPickId = null; }
+});
+$("#confirmNo").addEventListener("click", () => {
+  $("#confirmModal").hidden = true;
+  pendingPickId = null;
+});
+$("#confirmModal").addEventListener("click", (e) => {
+  if (e.target === $("#confirmModal")) { $("#confirmModal").hidden = true; pendingPickId = null; }
+});
 $("#clearTeam").addEventListener("click", () => {
   state.selected = Array(formation.length).fill(null);
   state.bench = benchPositions.reduce((acc, position) => {

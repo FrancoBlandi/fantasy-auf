@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fantasy AUF Manager · Apertura 2026</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">Liga AUF Uruguaya · Apertura 2026</p>
+        <h1>Fantasy AUF Manager</h1>
+      </div>
+      <nav class="tabs" aria-label="Secciones">
+        <button class="tab active" data-view="inicio">Inicio</button>
+        <button class="tab" data-view="manager">Mi equipo</button>
+        <button class="tab" data-view="puntos">Puntos</button>
+        <button class="tab" data-view="ranking">Ranking</button>
+      </nav>
+    </header>
+
+    <main>
+      <section class="score-strip" aria-label="Resumen">
+        <article>
+          <span id="totalPlayers">0</span>
+          <small>jugadores cargados</small>
+        </article>
+        <article>
+          <span id="teamCount">16</span>
+          <small>clubes AUF</small>
+        </article>
+        <article>
+          <span id="budgetLeft">$125.0M</span>
+          <small>presupuesto libre</small>
+        </article>
+        <article>
+          <span id="roundPoints">0 pts</span>
+          <small>jornada proyectada</small>
+        </article>
+      </section>
+
+      <section id="inicio" class="view active">
+        <div class="home-grid">
+          <section class="hero-dashboard">
+            <div>
+              <p class="eyebrow">Fecha 15 — Resultados</p>
+              <h2>Apertura 2026 · Fin del torneo</h2>
+              <p id="nextRoundLabel" class="home-copy">Apertura 2026 finalizado — viene el Torneo Intermedio.</p>
+            </div>
+            <div id="countdown" class="countdown" aria-label="Cuenta regresiva">
+              <span><strong id="countDays">00</strong><small>días</small></span>
+              <span><strong id="countHours">00</strong><small>horas</small></span>
+              <span><strong id="countMinutes">00</strong><small>min</small></span>
+              <span><strong id="countSeconds">00</strong><small>seg</small></span>
+            </div>
+          </section>
+
+          <section class="points-card">
+            <div class="panel-head">
+              <div>
+                <p class="eyebrow">Fecha 15</p>
+                <h2>Resultados</h2>
+              </div>
+            </div>
+            <div id="matchList" class="match-list"></div>
+          </section>
+
+          <section class="points-card">
+            <p class="eyebrow">Tendencias</p>
+            <h2>Más elegidos</h2>
+            <div id="popularPlayers" class="trend-list"></div>
+          </section>
+
+          <section class="points-card">
+            <p class="eyebrow">Capitanía</p>
+            <h2>Capitanes favoritos</h2>
+            <div id="popularCaptains" class="trend-list"></div>
+          </section>
+
+          <section class="points-card">
+            <p class="eyebrow">DT Fantasy</p>
+            <h2>Técnicos más usados</h2>
+            <div id="popularCoaches" class="trend-list"></div>
+          </section>
+        </div>
+      </section>
+
+      <section id="manager" class="view">
+        <div class="manager-layout">
+          <section class="pitch-panel">
+            <div class="panel-head">
+              <div>
+                <p class="eyebrow">Plantel</p>
+                <h2>Once titular</h2>
+              </div>
+              <div class="actions">
+                <button id="autoPick" class="primary">Autoarmar</button>
+                <button id="clearTeam" class="ghost">Limpiar</button>
+              </div>
+            </div>
+            <div class="pitch" id="pitch"></div>
+            <div class="bench-panel">
+              <div>
+                <p class="eyebrow">Banco</p>
+                <h2>Suplentes</h2>
+              </div>
+              <div id="bench" class="bench"></div>
+            </div>
+          </section>
+
+          <aside class="side-panel">
+            <div class="panel-head compact">
+              <div>
+                <p class="eyebrow">Reglas de armado</p>
+                <h2 id="formationTitle">3-4-3</h2>
+              </div>
+            </div>
+            <div class="captain-box">
+              <label for="formationSelect">Formación</label>
+              <select id="formationSelect"></select>
+            </div>
+            <ul class="rules-list">
+              <li>1 arquero y hasta 5 defensores, 5 mediocampistas o 5 delanteros.</li>
+              <li>Banco de suplentes: 1 arquero, 1 defensor, 1 mediocampista y 1 delantero.</li>
+              <li>Presupuesto máximo del plantel: $125.0M.</li>
+              <li>Capitán duplica puntos; vice suma 1.5x si no juega el capitán.</li>
+              <li>Director técnico: +1 si gana, 0 si empata y -1 si pierde.</li>
+            </ul>
+            <div class="captain-box">
+              <label for="captainSelect">Capitán</label>
+              <select id="captainSelect"></select>
+              <label for="viceSelect">Vice</label>
+              <select id="viceSelect"></select>
+              <label for="coachSelect">Director técnico</label>
+              <select id="coachSelect"></select>
+              <p id="coachStatus" class="meta"></p>
+            </div>
+
+            <div class="player-picker">
+              <div class="panel-head compact">
+                <div>
+                  <p class="eyebrow">Jugadores</p>
+                  <h2 id="pickerTitle">Elegí una posición</h2>
+                </div>
+              </div>
+              <div class="filters stacked">
+                <input id="search" type="search" placeholder="Buscar jugador o club" />
+                <select id="teamFilter"></select>
+              </div>
+              <div id="playerList" class="player-list"></div>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section id="puntos" class="view">
+        <div class="points-grid">
+          <article class="points-card">
+            <p class="eyebrow">Sistema</p>
+            <h2>Puntuación Fantasy AUF</h2>
+            <p style="font-size:14px;color:#c4c9ac;line-height:1.6;">El puntaje combina acciones ofensivas, defensivas, disciplina y participación. Está pensado para jornadas AUF y se puede ajustar si conectás eventos reales partido a partido.</p>
+          </article>
+          <article class="points-card">
+            <h3>Acciones</h3>
+            <dl id="pointsList"></dl>
+          </article>
+        </div>
+      </section>
+
+      <section id="ranking" class="view">
+        <div class="ranking-layout">
+          <article class="points-card">
+            <p class="eyebrow">Liga privada</p>
+            <h2>Tabla de managers</h2>
+            <ol id="rankingList" class="ranking"></ol>
+          </article>
+          <article class="points-card">
+            <p class="eyebrow">Clubes</p>
+            <h2>Distribución de mi plantel</h2>
+            <div id="clubBreakdown" class="club-breakdown"></div>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      Datos de planteles consultados en SofaScore · Liga AUF Uruguaya Apertura 2026 · Prototipo local sin backend
+    </footer>
+
+    <script src="./app.js"></script>
+  </body>
+</html>

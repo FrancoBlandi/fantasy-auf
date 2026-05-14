@@ -1,0 +1,198 @@
+/* ── Fonts ── */
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Archivo+Narrow:wght@400;700&family=JetBrains+Mono:wght@400;700&display=swap');
+
+/* ── Reset ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Archivo Narrow', system-ui, sans-serif; background: #121414; color: #e2e2e2; line-height: 1.6; min-height: 100vh; }
+a { color: #c3f400; text-decoration: none; }
+a:hover { text-decoration: underline; }
+select, input, button { font-family: inherit; font-size: 14px; }
+
+/* ── Topbar ── */
+.topbar { background: #0c0f0f; border-bottom: 3px solid #c3f400; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; padding: 14px 24px; position: sticky; top: 0; z-index: 100; }
+.topbar > div > p { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #8e9379; text-transform: uppercase; letter-spacing: .08em; }
+.topbar h1 { font-family: 'Anton', sans-serif; font-size: 22px; color: #c3f400; letter-spacing: .02em; }
+
+/* ── Tabs ── */
+.tabs { display: flex; flex-wrap: wrap; gap: 2px; }
+.tab { background: transparent; border: none; border-bottom: 2px solid transparent; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #8e9379; padding: 6px 14px; cursor: pointer; text-transform: uppercase; letter-spacing: .06em; transition: color .15s, border-color .15s; }
+.tab:hover { color: #e2e2e2; }
+.tab.active { color: #c3f400; border-bottom-color: #c3f400; }
+
+/* ── Score strip ── */
+.score-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: #2a2e2a; border-bottom: 1px solid #444933; }
+.score-strip article { background: #0c0f0f; padding: 14px 20px; text-align: center; }
+.score-strip span { display: block; font-family: 'Anton', sans-serif; font-size: 26px; color: #c3f400; line-height: 1; }
+.score-strip small { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #8e9379; text-transform: uppercase; letter-spacing: .04em; margin-top: 4px; display: block; }
+
+/* ── Views ── */
+.view { display: none; }
+.view.active { display: block; }
+main > .view { padding: 24px; max-width: 1400px; margin: 0 auto; }
+
+/* ── Home grid ── */
+.home-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.home-grid > :first-child { grid-column: 1 / -1; }
+
+/* ── Hero dashboard ── */
+.hero-dashboard { background: linear-gradient(135deg, #0c0f0f 0%, #1a1c1c 100%); border: 1px solid #444933; border-radius: 4px; padding: 32px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 24px; }
+.hero-dashboard .eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #c3f400; text-transform: uppercase; letter-spacing: .08em; margin-bottom: 6px; }
+.hero-dashboard h2 { font-family: 'Anton', sans-serif; font-size: 28px; color: #fff; }
+.home-copy { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #8e9379; margin-top: 8px; text-transform: uppercase; letter-spacing: .04em; }
+
+/* ── Countdown ── */
+.countdown { display: flex; gap: 12px; }
+.countdown > span { text-align: center; background: #1e2020; border: 1px solid #444933; border-radius: 4px; padding: 12px 16px; min-width: 64px; }
+.countdown strong { display: block; font-family: 'Anton', sans-serif; font-size: 32px; color: #c3f400; line-height: 1; }
+.countdown small { font-family: 'JetBrains Mono', monospace; font-size: 9px; color: #8e9379; text-transform: uppercase; letter-spacing: .04em; margin-top: 4px; display: block; }
+
+/* ── Generic panel card ── */
+.points-card { background: #1e2020; border: 1px solid #444933; border-radius: 4px; padding: 20px; }
+.eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #c3f400; text-transform: uppercase; letter-spacing: .08em; margin-bottom: 4px; display: block; }
+.points-card h2 { font-family: 'Anton', sans-serif; font-size: 20px; color: #e2e2e2; margin-bottom: 14px; }
+.points-card h3 { font-family: 'Anton', sans-serif; font-size: 16px; color: #e2e2e2; margin-bottom: 10px; }
+.panel-head { display: flex; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-bottom: 16px; }
+.panel-head.compact { margin-bottom: 10px; }
+
+/* ── Match list ── */
+.match-list { display: flex; flex-direction: column; gap: 8px; }
+.match-card { background: #121414; border: 1px solid #2a2e2a; border-radius: 3px; padding: 10px 14px; transition: border-color .15s; }
+.match-card:hover { border-color: #444933; }
+.match-card > span { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #8e9379; text-transform: uppercase; display: block; margin-bottom: 3px; }
+.match-card strong { font-size: 15px; font-weight: 700; color: #e2e2e2; display: block; }
+.match-card strong em { font-style: normal; color: #c3f400; margin: 0 6px; font-family: 'Anton', sans-serif; font-size: 17px; }
+.match-card small { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #8e9379; margin-top: 2px; display: block; }
+
+/* ── Trend list ── */
+.trend-list { display: flex; flex-direction: column; gap: 10px; }
+.trend-row { display: flex; align-items: center; gap: 12px; }
+.trend-rank { font-family: 'Anton', sans-serif; font-size: 20px; color: #333535; min-width: 22px; }
+.trend-row > div { flex: 1; min-width: 0; }
+.trend-row > div strong { font-size: 13px; display: block; color: #e2e2e2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.trend-row > div small { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #8e9379; text-transform: uppercase; }
+.trend-bar { display: block; height: 3px; background: #2a2e2a; border-radius: 2px; margin-top: 5px; overflow: hidden; }
+.trend-bar span { display: block; height: 100%; background: #c3f400; border-radius: 2px; }
+.trend-row > b { font-family: 'Anton', sans-serif; font-size: 16px; color: #c3f400; }
+.empty-state { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #8e9379; text-align: center; padding: 24px; text-transform: uppercase; letter-spacing: .04em; }
+
+/* ── Manager layout ── */
+#manager { padding: 0 !important; max-width: none !important; }
+.manager-layout { display: grid; grid-template-columns: 1fr 380px; min-height: calc(100vh - 117px); }
+
+/* ── Pitch panel ── */
+.pitch-panel { background: #0e1a0e; border-right: 1px solid #444933; padding: 24px; display: flex; flex-direction: column; gap: 16px; }
+.pitch-panel .panel-head h2 { color: #e2e2e2; margin-bottom: 0; }
+.actions { display: flex; gap: 8px; }
+
+/* ── Buttons ── */
+button.primary { background: #c3f400; color: #0c0f0f; border: none; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; padding: 8px 16px; border-radius: 2px; cursor: pointer; transition: background .15s; }
+button.primary:hover { background: #d4f51a; }
+button.ghost { background: transparent; color: #8e9379; border: 1px solid #444933; font-family: 'JetBrains Mono', monospace; font-size: 11px; text-transform: uppercase; letter-spacing: .05em; padding: 8px 16px; border-radius: 2px; cursor: pointer; transition: color .15s, border-color .15s; }
+button.ghost:hover { color: #e2e2e2; border-color: #8e9379; }
+
+/* ── Pitch ── */
+.pitch { flex: 1; display: flex; flex-direction: column; gap: 16px; padding: 20px 12px; background: radial-gradient(ellipse at center, #1c2e1c 0%, #0e1a0e 100%); border-radius: 4px; border: 1px solid #1e3a1e; }
+.line { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
+
+/* ── Slots ── */
+.slot { background: rgba(0,0,0,.4); border: 2px dashed #1e3a1e; border-radius: 4px; padding: 10px 8px; min-width: 90px; max-width: 140px; flex: 1; text-align: center; cursor: pointer; transition: border-color .15s, background .15s; }
+.slot:hover { border-color: #c3f400; background: rgba(195,244,0,.05); }
+.slot.filled { border-style: solid; border-color: #2a3d2a; background: rgba(30,32,32,.9); }
+.slot.filled:hover { border-color: #c3f400; }
+.slot.active-slot { border-color: #c3f400 !important; background: rgba(195,244,0,.08) !important; }
+.slot .chip { display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; padding: 2px 6px; border-radius: 2px; margin-bottom: 4px; }
+.slot.filled .chip { background: rgba(195,244,0,.14); color: #c3f400; }
+.slot:not(.filled) .chip { background: rgba(255,255,255,.06); color: #8e9379; }
+.slot strong { display: block; font-size: 11px; color: #e2e2e2; line-height: 1.3; margin-bottom: 2px; }
+.slot > span { display: block; font-family: 'JetBrains Mono', monospace; font-size: 9px; color: #8e9379; line-height: 1.3; }
+.slot .remove { display: block; margin: 6px auto 0; background: transparent; border: 1px solid #333535; color: #8e9379; font-family: 'JetBrains Mono', monospace; font-size: 9px; text-transform: uppercase; padding: 2px 8px; border-radius: 2px; cursor: pointer; transition: border-color .15s, color .15s; }
+.slot .remove:hover { border-color: #ef4444; color: #ef4444; }
+
+/* ── Bench ── */
+.bench-panel { border-top: 1px solid #1e3a1e; padding-top: 14px; }
+.bench-panel > div { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+.bench-panel .eyebrow { margin-bottom: 0; }
+.bench-panel h2 { font-family: 'Anton', sans-serif; font-size: 16px; color: #e2e2e2; margin-bottom: 0; }
+.bench { display: flex; gap: 8px; flex-wrap: wrap; }
+.bench-slot { min-width: 80px; max-width: 110px; padding: 8px 8px; border-width: 1px; }
+.bench-slot strong { font-size: 10px; }
+.bench-slot > span { font-size: 8px; }
+
+/* ── Side panel ── */
+.side-panel { background: #0c0f0f; display: flex; flex-direction: column; overflow-y: auto; max-height: calc(100vh - 117px); position: sticky; top: 117px; border-left: 1px solid #444933; }
+.side-panel > * { padding: 16px 18px; border-bottom: 1px solid #1e2020; }
+.side-panel > *:last-child { border-bottom: none; flex: 1; display: flex; flex-direction: column; }
+
+/* ── Selectors / Captain box ── */
+.captain-box { display: flex; flex-direction: column; gap: 8px; }
+.captain-box label { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #8e9379; text-transform: uppercase; letter-spacing: .05em; }
+.captain-box select { background: #121414; border: 1px solid #444933; color: #e2e2e2; font-size: 13px; padding: 7px 10px; border-radius: 3px; width: 100%; appearance: none; }
+.captain-box select:focus { outline: none; border-color: #c3f400; }
+
+/* ── Rules list ── */
+.rules-list { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+.rules-list li { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #8e9379; padding-left: 14px; position: relative; line-height: 1.5; }
+.rules-list li::before { content: '›'; position: absolute; left: 0; color: #c3f400; }
+
+/* ── Player picker ── */
+.player-picker { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+.player-picker > .panel-head { flex-shrink: 0; margin-bottom: 0; padding: 16px 18px; border-bottom: 1px solid #1e2020; }
+.player-picker .panel-head.compact { padding: 0; border: none; }
+.filters.stacked { display: flex; flex-direction: column; gap: 8px; padding: 12px 18px; flex-shrink: 0; border-bottom: 1px solid #1e2020; }
+.filters input { background: #121414; border: 1px solid #444933; color: #e2e2e2; font-size: 13px; padding: 7px 10px; border-radius: 3px; width: 100%; }
+.filters input:focus { outline: none; border-color: #c3f400; }
+.filters select { background: #121414; border: 1px solid #444933; color: #e2e2e2; font-size: 13px; padding: 7px 10px; border-radius: 3px; width: 100%; appearance: none; }
+.filters select:focus { outline: none; border-color: #c3f400; }
+.player-list { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 1px; padding: 8px; background: #0c0f0f; }
+.player-card { background: #121414; border: 1px solid #1e2020; border-radius: 3px; padding: 10px 12px; display: flex; align-items: center; justify-content: space-between; gap: 10px; transition: border-color .12s; }
+.player-card:hover { border-color: #444933; }
+.player-name { font-size: 13px; font-weight: 700; color: #e2e2e2; display: block; margin-bottom: 2px; }
+.meta { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #8e9379; }
+.player-card .chip { display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 9px; font-weight: 700; text-transform: uppercase; padding: 1px 5px; border-radius: 2px; margin-right: 3px; }
+.add-btn { background: #c3f400; color: #0c0f0f; border: none; font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; text-transform: uppercase; padding: 6px 10px; border-radius: 2px; cursor: pointer; white-space: nowrap; flex-shrink: 0; letter-spacing: .03em; transition: background .15s; }
+.add-btn:hover { background: #d4f51a; }
+.add-btn:disabled { background: #2a2e2a; color: #8e9379; cursor: not-allowed; }
+#coachStatus { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #8e9379; margin-top: 4px; line-height: 1.5; }
+
+/* ── Points section ── */
+.points-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+#pointsList { display: grid; grid-template-columns: 1fr auto; gap: 0; }
+#pointsList dt { font-size: 14px; color: #c4c9ac; padding: 7px 0; border-bottom: 1px solid #2a2e2a; }
+#pointsList dd { font-family: 'Anton', sans-serif; font-size: 18px; text-align: right; padding: 7px 0; border-bottom: 1px solid #2a2e2a; color: #c3f400; }
+#pointsList dt:last-of-type, #pointsList dd:last-of-type { border-bottom: none; }
+
+/* ── Ranking layout ── */
+.ranking-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.ranking { list-style: none; display: flex; flex-direction: column; gap: 6px; counter-reset: rank; }
+.ranking li { display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; background: #121414; border: 1px solid #2a2e2a; border-radius: 3px; font-size: 14px; }
+.ranking li:first-child { border-color: #c3f400; background: rgba(195,244,0,.04); font-weight: 700; }
+.ranking li .meta { font-family: 'Anton', sans-serif; font-size: 16px; color: #c3f400; }
+.club-breakdown { display: flex; flex-direction: column; gap: 8px; }
+.bar { display: flex; align-items: center; gap: 10px; }
+.bar strong { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #8e9379; text-transform: uppercase; min-width: 70px; letter-spacing: .03em; }
+.bar span { flex: 1; height: 5px; background: #c3f400; border-radius: 3px; display: block; }
+.bar em { font-family: 'Anton', sans-serif; font-size: 16px; color: #e2e2e2; font-style: normal; min-width: 18px; text-align: right; }
+
+/* ── Footer ── */
+footer { background: #0c0f0f; border-top: 3px solid #c3f400; padding: 20px 24px; text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #444933; text-transform: uppercase; letter-spacing: .05em; }
+footer a { color: #8e9379; }
+footer a:hover { color: #c3f400; }
+
+/* ── Responsive ── */
+@media (max-width: 960px) {
+  .home-grid { grid-template-columns: 1fr; }
+  .manager-layout { grid-template-columns: 1fr; }
+  .side-panel { position: static; max-height: none; }
+  .points-grid { grid-template-columns: 1fr; }
+  .ranking-layout { grid-template-columns: 1fr; }
+}
+@media (max-width: 700px) {
+  .score-strip { grid-template-columns: repeat(2, 1fr); }
+  .hero-dashboard { flex-direction: column; padding: 24px; }
+  .topbar { padding: 12px 16px; }
+  .topbar h1 { font-size: 18px; }
+  main > .view { padding: 16px; }
+  .countdown { gap: 8px; }
+  .countdown > span { min-width: 52px; padding: 10px 12px; }
+  .countdown strong { font-size: 24px; }
+}

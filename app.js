@@ -198,6 +198,25 @@ function splitNames(text = "") {
   return text.split(",").map((name) => name.trim()).filter(Boolean);
 }
 
+const kitMap = {
+  RAC: { style: "solid" },
+  MAL: { style: "sash",      secondary: "#ffffff" },
+  ALB: { style: "solid" },
+  "PEÑ": { style: "stripes_v", secondary: "#111111", sw: 6 },
+  DEF: { style: "sash",      secondary: "#ffffff" },
+  CES: { style: "solid" },
+  TOR: { style: "solid" },
+  LIV: { style: "hoops",     secondary: "#cc2200",  hw: 5 },
+  NAC: { style: "sash",      secondary: "#ffffff" },
+  DAN: { style: "stripes_v", secondary: "#bbbbbb",  sw: 4 },
+  CLA: { style: "stripes_v", secondary: "#ffffff",  sw: 5 },
+  BOS: { style: "halved",    secondary: "#111111" },
+  WAN: { style: "stripes_v", secondary: "#eeeeee",  sw: 5 },
+  JUV: { style: "sash",      secondary: "#f4c430" },
+  PRO: { style: "stripes_v", secondary: "#1a1a1a",  sw: 7 },
+  CER: { style: "stripes_v", secondary: "#ffffff",  sw: 5 },
+};
+
 const players = teams.flatMap((team) => {
   const entries = Object.entries(team.roster).flatMap(([position, names]) => {
     const finalPosition = position === "UNK" ? "MED" : position;
@@ -214,6 +233,7 @@ const players = teams.flatMap((team) => {
         team: team.name,
         short: team.short,
         color: team.color,
+        kit: kitMap[team.short] || { style: "solid" },
         position: finalPosition,
         price,
         form,
@@ -458,17 +478,53 @@ function projectedRoundPoints() {
   return playerPoints + coachPoints();
 }
 
-function makeJersey(color, uid) {
+function makeJersey(color, uid, kit = {}) {
+  const { style = "solid", secondary = "#ffffff", sw = 5, hw = 6 } = kit;
+  const JP = "M21 8 L7 16 L2 26 L14 30 L17 22 L17 62 L43 62 L43 22 L46 30 L58 26 L53 16 L39 8 Q30 14 21 8Z";
+  const collar = "M21 8 Q30 15 39 8 Q35 4 30 4 Q25 4 21 8Z";
+  const shadow = "M17 22 L17 62 L28 62 L28 22Z";
+
+  let defs = `
+    <linearGradient id="jg${uid}" x1="0" y1="0" x2=".7" y2="1">
+      <stop offset="0%" stop-color="${color}" stop-opacity=".95"/>
+      <stop offset="100%" stop-color="${color}" stop-opacity=".68"/>
+    </linearGradient>
+    <clipPath id="jc${uid}"><path d="${JP}"/></clipPath>`;
+
+  let body;
+  if (style === "stripes_v") {
+    defs += `<pattern id="jp${uid}" x="0" y="0" width="${sw * 2}" height="68" patternUnits="userSpaceOnUse">
+      <rect x="0" y="0" width="${sw}" height="68" fill="${color}"/>
+      <rect x="${sw}" y="0" width="${sw}" height="68" fill="${secondary}"/>
+    </pattern>`;
+    body = `<rect x="0" y="0" width="60" height="68" fill="url(#jp${uid})" clip-path="url(#jc${uid})"/>
+    <path d="${JP}" fill="url(#jg${uid})" opacity=".18"/>`;
+  } else if (style === "hoops") {
+    defs += `<pattern id="jp${uid}" x="0" y="0" width="60" height="${hw * 2}" patternUnits="userSpaceOnUse">
+      <rect x="0" y="0" width="60" height="${hw}" fill="${color}"/>
+      <rect x="0" y="${hw}" width="60" height="${hw}" fill="${secondary}"/>
+    </pattern>`;
+    body = `<rect x="0" y="0" width="60" height="68" fill="url(#jp${uid})" clip-path="url(#jc${uid})"/>
+    <path d="${JP}" fill="url(#jg${uid})" opacity=".18"/>`;
+  } else if (style === "sash") {
+    body = `<path d="${JP}" fill="url(#jg${uid})"/>
+    <polygon points="17,26 31,22 43,58 29,62" fill="${secondary}" opacity=".72" clip-path="url(#jc${uid})"/>`;
+  } else if (style === "halved") {
+    defs += `<linearGradient id="jh${uid}" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="50%" stop-color="${color}"/>
+      <stop offset="50%" stop-color="${secondary}"/>
+    </linearGradient>`;
+    body = `<path d="${JP}" fill="url(#jh${uid})"/>
+    <path d="${JP}" fill="url(#jg${uid})" opacity=".22"/>`;
+  } else {
+    body = `<path d="${JP}" fill="url(#jg${uid})"/>`;
+  }
+
   return `<svg class="jersey-svg" viewBox="0 0 60 68" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <defs>
-      <linearGradient id="jg${uid}" x1="0" y1="0" x2=".7" y2="1">
-        <stop offset="0%" stop-color="${color}" stop-opacity=".95"/>
-        <stop offset="100%" stop-color="${color}" stop-opacity=".68"/>
-      </linearGradient>
-    </defs>
-    <path d="M21 8 L7 16 L2 26 L14 30 L17 22 L17 62 L43 62 L43 22 L46 30 L58 26 L53 16 L39 8 Q30 14 21 8Z" fill="url(#jg${uid})"/>
-    <path d="M21 8 Q30 15 39 8 Q35 4 30 4 Q25 4 21 8Z" fill="rgba(255,255,255,.42)"/>
-    <path d="M17 22 L17 62 L28 62 L28 22Z" fill="rgba(0,0,0,.07)"/>
+    <defs>${defs}</defs>
+    ${body}
+    <path d="${collar}" fill="rgba(255,255,255,.42)"/>
+    <path d="${shadow}" fill="rgba(0,0,0,.07)"/>
   </svg>`;
 }
 
@@ -505,7 +561,7 @@ function renderSlot({ position, slotIndex = null, type = "starter" }) {
     const uid = (player.id + (slotIndex ?? position) + type).replace(/[^a-z0-9]/gi, "").slice(-14);
     slot.innerHTML = `
       <div class="jersey-wrap">
-        ${makeJersey(player.color, uid)}
+        ${makeJersey(player.color, uid, player.kit)}
         ${badge}
         <button class="remove" data-remove="${player.id}" title="Quitar">×</button>
       </div>

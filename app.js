@@ -458,6 +458,33 @@ function projectedRoundPoints() {
   return playerPoints + coachPoints();
 }
 
+function makeJersey(color, uid) {
+  return `<svg class="jersey-svg" viewBox="0 0 60 68" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="jg${uid}" x1="0" y1="0" x2=".7" y2="1">
+        <stop offset="0%" stop-color="${color}" stop-opacity=".95"/>
+        <stop offset="100%" stop-color="${color}" stop-opacity=".68"/>
+      </linearGradient>
+    </defs>
+    <path d="M21 8 L7 16 L2 26 L14 30 L17 22 L17 62 L43 62 L43 22 L46 30 L58 26 L53 16 L39 8 Q30 14 21 8Z" fill="url(#jg${uid})"/>
+    <path d="M21 8 Q30 15 39 8 Q35 4 30 4 Q25 4 21 8Z" fill="rgba(255,255,255,.42)"/>
+    <path d="M17 22 L17 62 L28 62 L28 22Z" fill="rgba(0,0,0,.07)"/>
+  </svg>`;
+}
+
+function makeGhostJersey() {
+  return `<svg class="jersey-svg ghost-jersey" viewBox="0 0 60 68" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M21 8 L7 16 L2 26 L14 30 L17 22 L17 62 L43 62 L43 22 L46 30 L58 26 L53 16 L39 8 Q30 14 21 8Z"
+      stroke="rgba(255,255,255,.22)" stroke-width="1.5" stroke-dasharray="4 3"/>
+  </svg>`;
+}
+
+function shortName(name) {
+  const parts = name.trim().split(/\s+/);
+  const last = parts[parts.length - 1];
+  return last.length > 11 ? last.slice(0, 10) + "…" : last;
+}
+
 function renderSlot({ position, slotIndex = null, type = "starter" }) {
   const player = type === "bench"
     ? players.find((item) => item.id === state.bench[position])
@@ -475,24 +502,39 @@ function renderSlot({ position, slotIndex = null, type = "starter" }) {
     const isCaptain = state.captain === player.id;
     const isVice = state.vice === player.id;
     const badge = isCaptain ? `<span class="slot-badge cap">C</span>` : isVice ? `<span class="slot-badge vic">V</span>` : "";
+    const uid = (player.id + (slotIndex ?? position) + type).replace(/[^a-z0-9]/gi, "").slice(-14);
     slot.innerHTML = `
-      <span class="chip" style="background:${player.color}"></span>
-      <div class="slot-body">
+      <div class="jersey-wrap">
+        ${makeJersey(player.color, uid)}
         ${badge}
-        <strong>${player.name}</strong>
-        <span class="slot-meta"><span class="slot-short" style="color:${player.color}">${player.short}</span> · $${player.price}M · ${player.points}pts</span>
+        <button class="remove" data-remove="${player.id}" title="Quitar">×</button>
       </div>
-      <button class="remove" data-remove="${player.id}" title="Quitar">×</button>
+      <span class="jersey-name">${shortName(player.name)}</span>
+      <span class="jersey-pts">${player.points}pts</span>
     `;
   } else {
-    slot.innerHTML = `<span class="chip"></span><div class="slot-body"><span class="slot-pos">${position}</span><strong>${type === "bench" ? "Suplente" : "Vacante"}</strong></div>`;
+    if (type === "bench") {
+      slot.innerHTML = `<span class="bench-pos-chip">${position}</span><strong>Vacante</strong>`;
+    } else {
+      slot.innerHTML = `<div class="jersey-wrap">${makeGhostJersey()}</div><span class="jersey-name ghost-label">${position}</span>`;
+    }
   }
   return slot;
 }
 
 function renderPitch() {
   const pitch = $("#pitch");
-  pitch.innerHTML = "";
+  pitch.innerHTML = `<svg class="pitch-lines" viewBox="0 0 100 100" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <line x1="0" y1="50" x2="100" y2="50" stroke="rgba(255,255,255,.18)" stroke-width=".5"/>
+    <ellipse cx="50" cy="50" rx="13" ry="9" stroke="rgba(255,255,255,.18)" stroke-width=".5" fill="none"/>
+    <circle cx="50" cy="50" r="1.2" fill="rgba(255,255,255,.28)"/>
+    <rect x="20" y="0" width="60" height="20" stroke="rgba(255,255,255,.15)" stroke-width=".5" fill="none"/>
+    <rect x="32" y="0" width="36" height="9" stroke="rgba(255,255,255,.1)" stroke-width=".4" fill="none"/>
+    <circle cx="50" cy="14" r="1" fill="rgba(255,255,255,.2)"/>
+    <rect x="20" y="80" width="60" height="20" stroke="rgba(255,255,255,.15)" stroke-width=".5" fill="none"/>
+    <rect x="32" y="91" width="36" height="9" stroke="rgba(255,255,255,.1)" stroke-width=".4" fill="none"/>
+    <circle cx="50" cy="86" r="1" fill="rgba(255,255,255,.2)"/>
+  </svg>`;
   [
     ["DEL", slotGroups.DEL?.length || 0, "del"],
     ["MED", slotGroups.MED?.length || 0, "med"],

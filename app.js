@@ -712,6 +712,9 @@ document.addEventListener("click", (event) => {
       slotIndex: Number(slot.dataset.slotIndex)
     };
     render();
+    const panel = document.querySelector(".side-panel");
+    const picker = document.querySelector(".player-picker");
+    if (panel && picker) panel.scrollTop = picker.offsetTop;
   }
 });
 

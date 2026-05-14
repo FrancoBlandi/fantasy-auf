@@ -307,104 +307,132 @@ button.ghost:hover { color: var(--on-surface); border-color: var(--outline); }
 .slot {
   background: transparent;
   border: 2px dashed rgba(255,255,255,.25);
-  border-radius: 8px;
+  border-radius: 10px;
   padding: 10px 8px;
   min-width: 90px;
   max-width: 130px;
   flex: 1;
   text-align: center;
   cursor: pointer;
-  transition: border-color .15s, background .15s;
+  transition: border-color .15s, background .15s, transform .1s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
 }
-.slot:hover { border-color: rgba(255,255,255,.6); background: rgba(255,255,255,.05); }
-.slot.active-slot { border-color: var(--secondary-container) !important; background: rgba(254,166,25,.1) !important; }
+.slot:hover { border-color: rgba(255,255,255,.6); background: rgba(255,255,255,.05); transform: translateY(-1px); }
+.slot.active-slot { border-color: var(--secondary-container) !important; background: rgba(254,166,25,.08) !important; }
 .slot.filled {
   border-style: solid;
   border-color: transparent;
   background: var(--surface-container-lowest);
-  box-shadow: 0 2px 4px rgba(0,0,0,.1);
-  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,.15);
+  border-radius: 10px;
   overflow: hidden;
   padding: 0;
+  gap: 0;
 }
-.slot.filled:hover { border-color: var(--primary); box-shadow: 0 4px 12px rgba(0,53,39,.2); }
+.slot.filled:hover { border-color: var(--outline-variant); box-shadow: 0 4px 14px rgba(0,0,0,.2); transform: translateY(-2px); }
+.slot.active-slot.filled { border-color: var(--secondary-container) !important; box-shadow: 0 0 0 2px var(--secondary-container), 0 4px 14px rgba(0,0,0,.2) !important; }
 
-/* Position color bar (top of filled card) */
+/* Club color bar */
 .slot .chip {
   display: block;
-  height: 4px;
+  height: 5px;
   width: 100%;
-  margin: 0;
-  border-radius: 0;
-  padding: 0;
-  letter-spacing: 0;
-  font-size: 0;
+  flex-shrink: 0;
 }
-/* chip colors by position — set via JS data-pos */
-.slot[data-pos="POR"] .chip, .slot[data-pos="GK"] .chip { background: var(--pos-gk); }
-.slot[data-pos="DEF"] .chip { background: var(--pos-def); }
-.slot[data-pos="MED"] .chip, .slot[data-pos="MID"] .chip { background: var(--pos-mid); }
-.slot[data-pos="DEL"] .chip, .slot[data-pos="FWD"] .chip { background: var(--pos-fwd); }
 .slot:not(.filled) .chip {
-  display: inline-block;
   height: auto;
   width: auto;
-  font-size: 9px;
-  font-weight: 700;
+  font-size: 10px;
+  font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: .04em;
-  padding: 2px 6px;
-  border-radius: 4px;
-  background: rgba(255,255,255,.15);
-  color: rgba(255,255,255,.7);
-  margin-bottom: 4px;
+  letter-spacing: .06em;
+  padding: 3px 8px;
+  border-radius: 6px;
+  background: rgba(255,255,255,.12);
+  color: rgba(255,255,255,.8);
 }
-.slot.filled .chip + * { padding-top: 8px; }
 
-/* Card body when filled */
-.slot.filled strong {
+/* Card body */
+.slot-body {
+  padding: 7px 8px 6px;
+  width: 100%;
+  text-align: center;
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+.slot.filled .slot-body strong {
   display: block;
   font-size: 11px;
   font-weight: 700;
   color: var(--on-surface);
   line-height: 1.3;
-  padding: 0 6px;
-  margin-bottom: 2px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  width: 100%;
 }
-.slot.filled > span {
+.slot-meta {
   display: block;
-  font-size: 10px;
-  font-weight: 700;
+  font-size: 9px;
+  font-weight: 600;
   color: var(--on-surface-variant);
   text-transform: uppercase;
-  letter-spacing: .04em;
-  padding: 0 6px;
+  letter-spacing: .03em;
+  white-space: nowrap;
 }
-.slot:not(.filled) strong { display: block; font-size: 11px; font-weight: 600; color: rgba(255,255,255,.5); line-height: 1.3; margin-bottom: 2px; }
-.slot:not(.filled) > span { display: block; font-size: 9px; color: rgba(255,255,255,.35); line-height: 1.3; }
+.slot-short { font-weight: 800; }
+.slot:not(.filled) .slot-body { padding: 0; background: transparent; }
+.slot:not(.filled) .slot-pos {
+  display: block;
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: rgba(255,255,255,.5);
+}
+.slot:not(.filled) strong { font-size: 11px; font-weight: 600; color: rgba(255,255,255,.4); }
 
-/* Price/points bar (bottom of filled card) */
-.slot.filled .remove {
+/* Captain / Vice badge */
+.slot-badge {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  font-size: 9px;
+  font-weight: 800;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 4px 8px;
-  background: var(--surface-container-high);
-  border-top: 1px solid var(--outline-variant);
-  margin: 6px 0 0;
-  cursor: pointer;
+  justify-content: center;
+  line-height: 1;
+}
+.slot-badge.cap { background: var(--secondary-container); color: var(--on-secondary-container); }
+.slot-badge.vic { background: var(--surface-container-high); color: var(--on-surface-variant); border: 1px solid var(--outline-variant); }
+
+/* Remove button */
+.slot .remove {
+  display: block;
+  width: 100%;
+  padding: 4px 0;
+  background: transparent;
   border: none;
   border-top: 1px solid var(--outline-variant);
-  width: 100%;
-  font-size: 10px;
-  font-weight: 700;
-  color: var(--primary);
+  font-size: 15px;
+  line-height: 1;
+  color: var(--on-surface-variant);
+  cursor: pointer;
+  transition: background .12s, color .12s;
+  flex-shrink: 0;
 }
-.slot .remove { background: transparent; border: 1px solid var(--outline-variant); color: var(--on-surface-variant); font-size: 9px; text-transform: uppercase; padding: 2px 8px; border-radius: 4px; cursor: pointer; margin: 6px auto 0; display: block; transition: border-color .15s, color .15s; }
-.slot .remove:hover { border-color: var(--error); color: var(--error); }
+.slot .remove:hover { background: var(--error-container); color: var(--on-error-container); }
 
 /* ── Bench ── */
 .bench-panel { border-top: 1px solid var(--outline-variant); padding-top: 14px; margin-top: 4px; }

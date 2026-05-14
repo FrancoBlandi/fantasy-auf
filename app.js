@@ -416,14 +416,20 @@ function renderSlot({ position, slotIndex = null, type = "starter" }) {
   slot.dataset.pos = position;
   if (slotIndex !== null) slot.dataset.slotIndex = slotIndex;
   if (player) {
+    const isCaptain = state.captain === player.id;
+    const isVice = state.vice === player.id;
+    const badge = isCaptain ? `<span class="slot-badge cap">C</span>` : isVice ? `<span class="slot-badge vic">V</span>` : "";
     slot.innerHTML = `
-      <span class="chip">${player.position}</span>
-      <strong>${player.name}</strong>
-      <span>${player.team} · $${player.price}M · ${player.points} pts</span>
-      <button class="remove" data-remove="${player.id}">Quitar</button>
+      <span class="chip" style="background:${player.color}"></span>
+      <div class="slot-body">
+        ${badge}
+        <strong>${player.name}</strong>
+        <span class="slot-meta"><span class="slot-short" style="color:${player.color}">${player.short}</span> · $${player.price}M · ${player.points}pts</span>
+      </div>
+      <button class="remove" data-remove="${player.id}" title="Quitar">×</button>
     `;
   } else {
-    slot.innerHTML = `<span class="chip">${position}</span><strong>${type === "bench" ? "Suplente" : "Vacante"}</strong><span>Elegí un jugador</span>`;
+    slot.innerHTML = `<span class="chip"></span><div class="slot-body"><span class="slot-pos">${position}</span><strong>${type === "bench" ? "Suplente" : "Vacante"}</strong></div>`;
   }
   return slot;
 }

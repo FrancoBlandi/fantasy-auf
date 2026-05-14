@@ -506,8 +506,9 @@ function makeJersey(color, uid, kit = {}) {
     body = `<path d="${JP}" fill="url(#jp${uid})"/>
     <path d="${JP}" fill="url(#jg${uid})" opacity=".18"/>`;
   } else if (style === "sash") {
+    defs += `<clipPath id="jc${uid}"><path d="${JP}" fill="black"/></clipPath>`;
     body = `<path d="${JP}" fill="url(#jg${uid})"/>
-    <polygon points="17,26 31,22 43,58 29,62" fill="${secondary}" opacity=".72" clip-path="url(#jc${uid})"/>`;
+    <polygon points="13,10 24,10 50,68 39,68" fill="${secondary}" opacity=".78" clip-path="url(#jc${uid})"/>`;
   } else if (style === "halved") {
     defs += `<linearGradient id="jh${uid}" x1="0" y1="0" x2="1" y2="0">
       <stop offset="50%" stop-color="${color}"/>

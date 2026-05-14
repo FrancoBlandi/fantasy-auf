@@ -341,18 +341,14 @@ button.ghost:hover { color: var(--on-surface); border-color: var(--outline); }
   height: 5px;
   width: 100%;
   flex-shrink: 0;
+  border-radius: 0;
+  padding: 0;
+  font-size: 0;
 }
+/* Empty pitch slots: thin white pill as position label */
 .slot:not(.filled) .chip {
-  height: auto;
-  width: auto;
-  font-size: 10px;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: .06em;
-  padding: 3px 8px;
-  border-radius: 6px;
-  background: rgba(255,255,255,.12);
-  color: rgba(255,255,255,.8);
+  height: 3px;
+  background: rgba(255,255,255,.2);
 }
 
 /* Card body */
@@ -484,16 +480,15 @@ button.primary.saved { background: #16a34a; color: #fff; }
 .bench-slot {
   min-width: 80px;
   max-width: 110px;
-  border: 1px dashed var(--outline-variant);
-  background: var(--surface-container-low);
-  border-radius: 8px;
+  border: 1.5px solid var(--outline-variant);
+  background: var(--surface-container-lowest);
 }
-.bench-slot:not(.filled) .chip { background: var(--outline-variant); color: var(--on-surface-variant); }
+/* Override the white-on-dark styles for bench (light background) */
+.bench-slot:not(.filled) { border-style: dashed; }
+.bench-slot:not(.filled) .chip { background: var(--outline-variant); }
+.bench-slot:not(.filled) .slot-body { background: transparent; }
 .bench-slot:not(.filled) .slot-pos { color: var(--on-surface-variant); }
 .bench-slot:not(.filled) strong { color: var(--on-surface-variant); }
-.bench-slot:not(.filled) .slot-body { background: transparent; }
-.bench-slot strong { font-size: 10px; }
-.bench-slot > span { font-size: 8px; }
 
 /* ── Side panel ── */
 .side-panel {

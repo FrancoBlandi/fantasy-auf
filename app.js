@@ -254,6 +254,21 @@ const state = {
 const $ = (selector) => document.querySelector(selector);
 const $$ = (selector) => [...document.querySelectorAll(selector)];
 
+// Remove duplicate player IDs that may have crept into state
+(function dedupeState() {
+  const seen = new Set();
+  state.selected = state.selected.map(id => {
+    if (!id || seen.has(id)) return null;
+    seen.add(id);
+    return id;
+  });
+  benchPositions.forEach(pos => {
+    const id = state.bench[pos];
+    if (id && seen.has(id)) state.bench[pos] = null;
+    else if (id) seen.add(id);
+  });
+})();
+
 function alignSelectionToFormation(selection, targetFormation) {
   return targetFormation.map((position, index) => {
     if (selection.length === targetFormation.length) {

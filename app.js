@@ -413,6 +413,7 @@ function renderSlot({ position, slotIndex = null, type = "starter" }) {
   slot.className = `slot ${type === "bench" ? "bench-slot" : ""} ${player ? "filled" : ""} ${isActive ? "active-slot" : ""}`;
   slot.dataset.slotPosition = position;
   slot.dataset.slotType = type;
+  slot.dataset.pos = position;
   if (slotIndex !== null) slot.dataset.slotIndex = slotIndex;
   if (player) {
     slot.innerHTML = `
@@ -456,6 +457,8 @@ function renderBench() {
 }
 
 function renderPlayerPicker() {
+  const sidePanel = document.querySelector(".side-panel");
+  if (sidePanel) sidePanel.classList.toggle("picking", !!state.activeSlot);
   if (!state.activeSlot) {
     $("#pickerTitle").textContent = "Elegí una posición";
     $("#playerList").innerHTML = `<p class="meta" style="padding:16px;text-align:center;">Tocá un casillero del campo para ver jugadores de ese puesto.</p>`;
@@ -714,7 +717,17 @@ document.addEventListener("click", (event) => {
     render();
     const panel = document.querySelector(".side-panel");
     const picker = document.querySelector(".player-picker");
-    if (panel && picker) panel.scrollTop = picker.offsetTop;
+    if (picker) {
+      if (panel && panel.scrollHeight > panel.clientHeight) {
+        const top = picker.getBoundingClientRect().top - panel.getBoundingClientRect().top + panel.scrollTop;
+        panel.scrollTo({ top, behavior: "smooth" });
+      } else {
+        picker.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+      picker.classList.remove("flash");
+      void picker.offsetWidth;
+      picker.classList.add("flash");
+    }
   }
 });
 

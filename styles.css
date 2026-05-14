@@ -447,6 +447,8 @@ button.ghost:hover { color: var(--on-surface); border-color: var(--outline); }
 .captain-box select:focus { outline: none; border-color: var(--primary); }
 
 /* ── Rules list ── */
+.side-panel.picking .rules-list { display: none; }
+.side-panel.picking .captain-selectors { display: none; }
 .rules-list { list-style: none; display: flex; flex-direction: column; gap: 6px; }
 .rules-list li {
   font-size: 11px;
@@ -458,6 +460,12 @@ button.ghost:hover { color: var(--on-surface); border-color: var(--outline); }
 .rules-list li::before { content: '›'; position: absolute; left: 0; color: var(--secondary-container); }
 
 /* ── Player picker ── */
+@keyframes picker-flash {
+  0%   { box-shadow: 0 0 0 0 rgba(254,166,25,.6); }
+  50%  { box-shadow: 0 0 0 6px rgba(254,166,25,.15); }
+  100% { box-shadow: 0 0 0 0 rgba(254,166,25,0); }
+}
+.player-picker.flash { animation: picker-flash .45s ease-out; }
 .player-picker { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
 .player-picker > .panel-head { flex-shrink: 0; margin-bottom: 0; padding: 16px 18px; border-bottom: 1px solid var(--surface-container-high); }
 .player-picker .panel-head.compact { padding: 0; border: none; }

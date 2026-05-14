@@ -366,6 +366,7 @@ button.ghost:hover { color: var(--on-surface); border-color: var(--outline); }
   flex-direction: column;
   align-items: center;
   gap: 2px;
+  background: var(--surface-container-lowest);
 }
 .slot.filled .slot-body strong {
   display: block;
@@ -480,7 +481,17 @@ button.primary.saved { background: #16a34a; color: #fff; }
 .bench-panel .eyebrow { margin-bottom: 0; }
 .bench-panel h2 { font-size: 16px; font-weight: 700; color: var(--on-surface); margin-bottom: 0; }
 .bench { display: flex; gap: 8px; flex-wrap: wrap; }
-.bench-slot { min-width: 80px; max-width: 110px; padding: 8px 8px; border-width: 1px; }
+.bench-slot {
+  min-width: 80px;
+  max-width: 110px;
+  border: 1px dashed var(--outline-variant);
+  background: var(--surface-container-low);
+  border-radius: 8px;
+}
+.bench-slot:not(.filled) .chip { background: var(--outline-variant); color: var(--on-surface-variant); }
+.bench-slot:not(.filled) .slot-pos { color: var(--on-surface-variant); }
+.bench-slot:not(.filled) strong { color: var(--on-surface-variant); }
+.bench-slot:not(.filled) .slot-body { background: transparent; }
 .bench-slot strong { font-size: 10px; }
 .bench-slot > span { font-size: 8px; }
 

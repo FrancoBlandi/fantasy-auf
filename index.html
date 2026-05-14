@@ -3,13 +3,15 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Fantasy AUF Manager · Apertura 2026</title>
+    <title>Fantasy AUF Manager</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo+Narrow:wght@400;700&family=JetBrains+Mono:wght@400;700&display=swap" />
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
     <header class="topbar">
       <div>
-        <p class="eyebrow">Liga AUF Uruguaya · Apertura 2026</p>
+        <p class="eyebrow">Liga AUF Uruguaya 2026</p>
         <h1>Fantasy AUF Manager</h1>
       </div>
       <nav class="tabs" aria-label="Secciones">
@@ -44,9 +46,9 @@
         <div class="home-grid">
           <section class="hero-dashboard">
             <div>
-              <p class="eyebrow">Fecha 15 — Resultados</p>
-              <h2>Apertura 2026 · Fin del torneo</h2>
-              <p id="nextRoundLabel" class="home-copy">Apertura 2026 finalizado — viene el Torneo Intermedio.</p>
+              <p class="eyebrow">Próxima fecha</p>
+              <h2>Apertura 2026 · Fecha 15</h2>
+              <p id="nextRoundLabel" class="home-copy">Comienza el viernes 8 de mayo a las 19:30.</p>
             </div>
             <div id="countdown" class="countdown" aria-label="Cuenta regresiva">
               <span><strong id="countDays">00</strong><small>días</small></span>
@@ -59,8 +61,8 @@
           <section class="points-card">
             <div class="panel-head">
               <div>
-                <p class="eyebrow">Fecha 15</p>
-                <h2>Resultados</h2>
+                <p class="eyebrow">Fecha actual</p>
+                <h2>Partidos</h2>
               </div>
             </div>
             <div id="matchList" class="match-list"></div>
@@ -159,7 +161,7 @@
           <article class="points-card">
             <p class="eyebrow">Sistema</p>
             <h2>Puntuación Fantasy AUF</h2>
-            <p style="font-size:14px;color:#c4c9ac;line-height:1.6;">El puntaje combina acciones ofensivas, defensivas, disciplina y participación. Está pensado para jornadas AUF y se puede ajustar si conectás eventos reales partido a partido.</p>
+            <p>El puntaje combina acciones ofensivas, defensivas, disciplina y participación. Está pensado para jornadas AUF y se puede ajustar si luego conectás eventos reales partido a partido.</p>
           </article>
           <article class="points-card">
             <h3>Acciones</h3>
@@ -185,7 +187,7 @@
     </main>
 
     <footer>
-      Datos de planteles consultados en SofaScore · Liga AUF Uruguaya Apertura 2026 · Prototipo local sin backend
+      Datos base de clubes y planteles consultados en SofaScore para Liga AUF Uruguaya 2026. Prototipo local sin backend.
     </footer>
 
     <script src="./app.js"></script>
